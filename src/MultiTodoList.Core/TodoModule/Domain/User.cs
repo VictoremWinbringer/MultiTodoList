@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using MultiTodoList.Core.TodoModule.Domain.Exceptions;
+using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
 namespace MultiTodoList.Core.TodoModule.Domain
 {

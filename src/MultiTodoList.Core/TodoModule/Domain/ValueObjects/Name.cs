@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using MultiTodoList.Core.TodoModule.Domain.Exceptions;
 
-namespace MultiTodoList.Core.TodoModule.Domain
+namespace MultiTodoList.Core.TodoModule.Domain.ValueObjects
 {
     public sealed class Name
     {

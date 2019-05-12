@@ -1,4 +1,4 @@
-namespace MultiTodoList.Core.TodoModule.Domain
+namespace MultiTodoList.Core.TodoModule.Domain.ValueObjects
 {
     public struct Color
     {
