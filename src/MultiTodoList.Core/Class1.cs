@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MultiTodoList.Core
@@ -36,65 +37,112 @@ namespace MultiTodoList.Core
         }
     }
 
-    public enum ColorField
-    {
-        Red,
-        Green,
-        Blue
-    }
-
-    public class ColorValueToBigException : Exception
-    {
-        public ColorField Field { get; }
-        public uint Value { get; }
-
-        public ColorValueToBigException(ColorField field, uint value)
-        {
-            Field = field;
-            Value = value;
-        }
-    }
-
     public struct Color
     {
-        public uint Red { get; }
-        public uint Green { get; }
-        public uint Blue { get; }
+        public byte Red { get; }
+        public byte Green { get; }
+        public byte Blue { get; }
 
-        public Color(uint red, uint green, uint blue)
+        public Color(byte red, byte green, byte blue)
         {
-            if (red > 255)
-                throw new ColorValueToBigException(ColorField.Red, red);
-            
-            if (green > 255)
-                throw new ColorValueToBigException(ColorField.Green, green);
-            
-            if (blue > 255)
-                throw new ColorValueToBigException(ColorField.Blue, blue);
-            
             Red = red;
             Green = green;
             Blue = blue;
+        }
+    }
+
+    public class TodoPreviouslyCompletedThanCreatedException : Exception
+    {
+        public DateTime Created { get; }
+        public DateTime Complited { get; }
+
+        public TodoPreviouslyCompletedThanCreatedException(DateTime created, DateTime complited)
+        {
+            Created = created;
+            Complited = complited;
         }
     }
     
     public class Todo
     {
         public Guid Id { get; }
-        public Name Name { get; }
-        public bool IsComplite { get; }
+        public Name Name { get; private set; }
+        public bool IsComplite { get; private set; }
         public DateTime Created { get; }
+        public DateTime Complited { get; private set; }
+
+        public Todo(Guid id, Name name, bool isComplite, DateTime created, DateTime complited)
+        {
+            
+            if(complited != default && complited < created)
+                throw new TodoPreviouslyCompletedThanCreatedException(created,complited);
+            
+            Id = id;
+            Name = name;
+            IsComplite = isComplite;
+            Created = created;
+        }
+        
+        public Todo(Name name) : this(Guid.NewGuid(), name, default, DateTime.UtcNow, default)
+        {
+            
+        }
+
+        public void MakeCompleted()
+        {
+            IsComplite = true;
+            Complited = DateTime.UtcNow;
+        }
+
+        public void Rename(Name name)
+        {
+            Name = name;
+        }
     }
 
     public class TodoGroup
     {
-        private readonly List<Todo> _todos = new List<Todo>();
+        private readonly List<Todo> _todos;
         
         public Guid Id { get;}
-        public Name Name { get; }
-        public Color Color { get; }
-       
+        public Name Name { get; private set; }
+        public Color Color { get; private set; }
+        public IReadOnlyList<Todo> Todos => _todos;
+
+        public TodoGroup(Guid id, Name name, Color color, List<Todo> todos)
+        {
+            Id = id;
+            Name = name;
+            Color = color;
+            _todos = todos;
+        }
+
+        public TodoGroup(Name name, Color color):this(Guid.NewGuid(), name, color, new List<Todo>())
+        {
+            
+        }
+
+        public void Rename(Name name)
+        {
+            Name = name;
+        }
+
+        public void ChangeColor(Color color)
+        {
+            Color = color;
+        }
+
+        public void AddTodo(Todo todo)
+        {
+           _todos.Add(todo);
+        }
+
+        public void RemoveTodo(Todo todo)
+        {
+            _todos.RemoveAll(t => t.Id == todo.Id);
+        }
     }
+    
     public class User
     {
         private readonly List<TodoGroup> _groups = new List<TodoGroup>();
