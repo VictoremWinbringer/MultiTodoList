@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -88,15 +87,25 @@ namespace MultiTodoList.Core
             
         }
 
-        public void MakeCompleted()
+        internal void MakeCompleted()
         {
             IsComplite = true;
             Complited = DateTime.UtcNow;
         }
 
-        public void Rename(Name name)
+        internal void Rename(Name name)
         {
             Name = name;
+        }
+    }
+
+    public class TodoExistInGroupException : Exception
+    {
+        public Guid Id { get; }
+
+        public TodoExistInGroupException(Guid id)
+        {
+            Id = id;
         }
     }
 
@@ -107,7 +116,7 @@ namespace MultiTodoList.Core
         public Guid Id { get;}
         public Name Name { get; private set; }
         public Color Color { get; private set; }
-        public IReadOnlyList<Todo> Todos => _todos;
+        public IReadOnlyCollection<Todo> Todos => _todos.AsReadOnly();
 
         public TodoGroup(Guid id, Name name, Color color, List<Todo> todos)
         {
@@ -122,22 +131,24 @@ namespace MultiTodoList.Core
             
         }
 
-        public void Rename(Name name)
+        internal void Rename(Name name)
         {
             Name = name;
         }
 
-        public void ChangeColor(Color color)
+        internal void ChangeColor(Color color)
         {
             Color = color;
         }
 
-        public void AddTodo(Todo todo)
+        internal void AddTodo(Todo todo)
         {
+            if(_todos.Any(t=>t.Id == todo.Id))
+                throw new TodoExistInGroupException(todo.Id);
            _todos.Add(todo);
         }
 
-        public void RemoveTodo(Todo todo)
+        internal void RemoveTodo(Todo todo)
         {
             _todos.RemoveAll(t => t.Id == todo.Id);
         }
@@ -151,6 +162,6 @@ namespace MultiTodoList.Core
         public  byte[] Photo { get; }
         public uint Age { get; }
         public Name Name { get;}
-        
+        public IReadOnlyCollection<TodoGroup> Groups => _groups.AsReadOnly();
     }
 }
