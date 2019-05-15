@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using MultiTodoList.Core.TodoModule.Domain.Exceptions;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
@@ -9,14 +8,24 @@ namespace MultiTodoList.Core.TodoModule.Domain
 {
     public sealed class User
     {
-        private readonly List<TodoGroup> _groups = new List<TodoGroup>();
+        private readonly List<TodoGroup> _groups;
 
         public Guid Id { get; }
-        public byte[] Photo { get; }
-        public uint Age { get; }
+        public Photo Photo { get; }
+        public Age Age { get; }
         public Name Name { get; }
         public IReadOnlyCollection<TodoGroup> Groups => _groups.AsReadOnly();
 
+        public User(Guid id, Photo photo, Age age, Name name, List<TodoGroup> groups)
+        {
+            Id = id;
+            Photo = photo;
+            Age = age;
+            Name = name;
+            _groups = groups;
+        }
+
+        public User(Photo photo,Age age, Name name) : this(Guid.NewGuid(), photo, age, name, new List<TodoGroup>()){}
 
         private void CheckColor(TodoGroup group)
         {
