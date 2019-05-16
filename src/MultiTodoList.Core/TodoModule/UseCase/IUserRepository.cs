@@ -10,11 +10,13 @@ namespace MultiTodoList.Core.TodoModule.UseCase
     {
         
         void Create(User user);
+        
         User Get(Guid id);
 
         List<User> Get();
 
         void Update(User user);
+        
         void Remove(Guid id);
 
         bool Contains(Name todoName);
