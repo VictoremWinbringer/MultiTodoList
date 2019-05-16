@@ -9,45 +9,40 @@ namespace MultiTodoList.Core.TodoModule.Domain
     public sealed class TodoGroup
     {
         private readonly List<Todo> _todos;
-        
-        public Guid Id { get;}
-        public Name Name { get; private set; }
+
+        //Name is ID
+        public Name Name { get; }
+
         public Color Color { get; private set; }
+        
         public IReadOnlyCollection<Todo> Todos => _todos.AsReadOnly();
 
-        public TodoGroup(Guid id, Name name, Color color, List<Todo> todos)
+        public TodoGroup(Name name, Color color, List<Todo> todos)
         {
-            Id = id;
             Name = name;
             Color = color;
             _todos = todos;
         }
 
-        public TodoGroup(Name name, Color color):this(Guid.NewGuid(), name, color, new List<Todo>())
+        public TodoGroup(Name name, Color color) : this(name, color, new List<Todo>())
         {
-            
         }
 
-        internal void Rename(Name name)
+        internal void AddTodo(Todo todo)
         {
-            Name = name;
+            if (_todos.Any(t => t.Name == todo.Name))
+                throw new TodoExistInGroupException(todo.Name.Value);
+            _todos.Add(todo);
+        }
+
+        internal void RemoveTodo(Name todoName)
+        {
+            _todos.RemoveAll(t => t.Name == todoName);
         }
 
         internal void ChangeColor(Color color)
         {
             Color = color;
-        }
-
-        internal void AddTodo(Todo todo)
-        {
-            if(_todos.Any(t=>t.Id == todo.Id))
-                throw new TodoExistInGroupException(todo.Id);
-            _todos.Add(todo);
-        }
-
-        internal void RemoveTodo(Todo todo)
-        {
-            _todos.RemoveAll(t => t.Id == todo.Id);
         }
     }
 }

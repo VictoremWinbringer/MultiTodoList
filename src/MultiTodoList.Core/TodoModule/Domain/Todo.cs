@@ -6,38 +6,36 @@ namespace MultiTodoList.Core.TodoModule.Domain
 {
     public sealed class Todo
     {
-        public Guid Id { get; }
-        public Name Name { get; private set; }
-        public bool IsComplite { get; private set; }
+        // name is id
+        public Name Name { get; }
+        public bool IsComplited { get; private set; }
         public DateTime Created { get; }
         public DateTime Complited { get; private set; }
 
-        public Todo(Guid id, Name name, bool isComplite, DateTime created, DateTime complited)
+        public Todo(Name name, bool isComplited, DateTime created, DateTime complited)
         {
-            
-            if(complited != default && complited < created)
-                throw new TodoPreviouslyCompletedThanCreatedException(created,complited);
-            
-            Id = id;
+            if (complited != default && complited < created)
+                throw new TodoPreviouslyCompletedThanCreatedException(created, complited);
             Name = name;
-            IsComplite = isComplite;
+            IsComplited = isComplited;
             Created = created;
         }
-        
-        public Todo(Name name) : this(Guid.NewGuid(), name, default, DateTime.UtcNow, default)
+
+        public Todo(Name name) : this(name, default, DateTime.UtcNow, default)
         {
-            
         }
 
         internal void MakeCompleted()
         {
-            IsComplite = true;
+            if (IsComplited)
+                throw new TodoAlreadyCompletedException();
+
+            IsComplited = true;
             Complited = DateTime.UtcNow;
         }
+    }
 
-        internal void Rename(Name name)
-        {
-            Name = name;
-        }
+    public class TodoAlreadyCompletedException : Exception
+    {
     }
 }
