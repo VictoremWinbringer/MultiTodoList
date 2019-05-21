@@ -7,19 +7,23 @@ using Microsoft.EntityFrameworkCore;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 using MultiTodoList.Core.TodoModule.UseCase;
+using Remotion.Linq.Clauses;
 
 namespace MultiTodoList.Infrastructure
 {
     [Table("Users")]
     class UserDbDto
     {
+        [Key] public Guid Id { get; set; }
+        public byte[] Photo { get; set; }
+        public int Age { get; set; }
+        public string Name { get; set; }
     }
 
     [Table("Todos")]
     class TodoDbDto
     {
-        [Key]
-        public string Name { get; }
+        [Key] public string Name { get; }
         public bool IsComplited { get; set; }
         public DateTime Created { get; set; }
         public DateTime Complited { get; set; }
@@ -30,6 +34,27 @@ namespace MultiTodoList.Infrastructure
     [Table("TodoGroups")]
     class TodoGroupDbDto
     {
+        [Key] public string Name { get; set; }
+
+        public byte Red { get; set; }
+        public byte Green { get; set; }
+        public byte Blue { get; set; }
+
+        public TodoGroup To(List<Todo> todos)
+        {
+            return new TodoGroup(new Name(Name), new Color(Red, Green, Blue), todos);
+        }
+
+        public static TodoGroupDbDto From(TodoGroup group)
+        {
+            return new TodoGroupDbDto
+            {
+                Name = group.Name.Value,
+                Blue = group.Color.Blue,
+                Green = group.Color.Green,
+                Red = group.Color.Red
+            };
+        }
     }
 
     public class UserEfRepository : IUserRepository
