@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +15,7 @@ namespace MultiTodoList.Infrastructure.Dto
         public byte Red { get; set; }
         public byte Green { get; set; }
         public byte Blue { get; set; }
+        public UserDbDto User { get; set; }
         public List<TodoDbDto> Todos { get; set; }
 
         public TodoGroup To()

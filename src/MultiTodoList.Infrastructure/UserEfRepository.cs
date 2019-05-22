@@ -28,13 +28,21 @@ namespace MultiTodoList.Infrastructure
 
         public async Task< User> Get(Guid id)
         {
-            var user = await _usersContext.Users.FirstAsync(u => u.Id == id);
+            var user = await _usersContext
+                .Users
+                .Include(u =>u.Groups)
+                .ThenInclude(g=>g.Todos)
+                .FirstAsync(u => u.Id == id);
             return user.To();
         }
 
         public async Task<List<User>> Get()
         {
-            var users = await _usersContext.Users.ToListAsync();
+            var users = await _usersContext
+                .Users
+                .Include(u =>u.Groups)
+                .ThenInclude(g=>g.Todos)
+                .ToListAsync();
             return users.Select(u => u.To()).ToList();
         }
 

@@ -15,8 +15,9 @@ namespace MultiTodoList.Infrastructure.Dto
         public byte[] Photo { get; set; }
         public uint Age { get; set; }
         public string Name { get; set; }
-
         public List<TodoGroupDbDto> Groups { get; set; }
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
 
         public User To()
         {

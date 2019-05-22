@@ -13,6 +13,8 @@ namespace MultiTodoList.Infrastructure.Dto
         public bool IsComplited { get; set; }
         public DateTime Created { get; set; }
         public DateTime Complited { get; set; }
+        
+        public TodoGroupDbDto Group { get; set; }
 
         public Todo To()
         {
