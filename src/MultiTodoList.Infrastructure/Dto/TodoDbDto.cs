@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
-namespace MultiTodoList.Infrastructure
+namespace MultiTodoList.Infrastructure.Dto
 {
     [Table("Todos")]
     public class TodoDbDto

@@ -8,7 +8,7 @@ namespace MultiTodoList.Presentation.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class UsersController : ControllerBase
     {
         // GET api/values
         [HttpGet]

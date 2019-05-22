@@ -6,7 +6,7 @@ using System.Linq;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
-namespace MultiTodoList.Infrastructure
+namespace MultiTodoList.Infrastructure.Dto
 {
     [Table("Users")]
     public class UserDbDto
