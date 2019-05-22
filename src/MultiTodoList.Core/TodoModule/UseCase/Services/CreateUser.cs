@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
@@ -5,7 +6,7 @@ namespace MultiTodoList.Core.TodoModule.UseCase.Services
 {
     public interface ICreateUser
     {
-        void Execute( Name name, Age age, Photo photo);
+        Task Execute( Name name, Age age, Photo photo);
     }
 
     public class CreateUser : ICreateUser
@@ -17,10 +18,10 @@ namespace MultiTodoList.Core.TodoModule.UseCase.Services
             _repository = repository;
         }
 
-        public void Execute( Name name, Age age, Photo photo)
+        public async Task Execute( Name name, Age age, Photo photo)
         {
             var user = new User(photo,age,name);
-            _repository.Create(user);
+           await _repository.Create(user);
         }
     }
 }

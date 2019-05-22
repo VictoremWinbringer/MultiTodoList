@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
@@ -8,17 +9,16 @@ namespace MultiTodoList.Core.TodoModule.UseCase
 {
     public interface IUserRepository
     {
-        
-        void Create(User user);
-        
-        User Get(Guid id);
+        Task Create(User user);
 
-        List<User> Get();
+        Task<User> Get(Guid id);
 
-        void Update(User user);
-        
-        void Remove(Guid id);
+        Task<List<User>> Get();
 
-        bool Contains(Name todoName);
+        Task Update(User user);
+
+        Task Remove(Guid id);
+
+        Task<bool> Contains(Name todoName);
     }
 }

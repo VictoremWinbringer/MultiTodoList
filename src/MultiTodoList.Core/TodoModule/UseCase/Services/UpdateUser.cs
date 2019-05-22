@@ -1,11 +1,12 @@
 using System;
+using System.Threading.Tasks;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
 namespace MultiTodoList.Core.TodoModule.UseCase.Services
 {
     public interface IUpdateUser
     {
-        void Execute(Guid id, Name name, Age age, Photo photo);
+        Task Execute(Guid id, Name name, Age age, Photo photo);
     }
 
     public class UpdateUser : IUpdateUser
@@ -17,11 +18,11 @@ namespace MultiTodoList.Core.TodoModule.UseCase.Services
             _repository = repository;
         }
 
-        public void Execute(Guid id, Name name, Age age, Photo photo)
+        public async Task Execute(Guid id, Name name, Age age, Photo photo)
         {
-            var user = _repository.Get(id);
-            user.UpdateInfo(photo,name,age);
-            _repository.Update(user);
+            var user = await _repository.Get(id);
+            user.UpdateInfo(photo, name, age);
+            await _repository.Update(user);
         }
     }
 }

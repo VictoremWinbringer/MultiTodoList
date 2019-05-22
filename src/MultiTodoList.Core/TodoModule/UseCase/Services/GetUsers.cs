@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MultiTodoList.Core.TodoModule.Domain;
 
 namespace MultiTodoList.Core.TodoModule.UseCase.Services
 {
     public interface IGetUsers
     {
-        List<User> Execute();
+        Task<List<User>> Execute();
     }
 
     public class GetUsers : IGetUsers
@@ -17,7 +18,7 @@ namespace MultiTodoList.Core.TodoModule.UseCase.Services
             _repository = repository;
         }
 
-        public List<User> Execute()
+        public  Task<List<User>> Execute()
         {
             return _repository.Get();
         }

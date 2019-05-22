@@ -1,10 +1,11 @@
 using System;
+using System.Threading.Tasks;
 
 namespace MultiTodoList.Core.TodoModule.UseCase.Services
 {
     public interface IDeleteUser
     {
-        void Execute(Guid id);
+        Task Execute(Guid id);
     }
 
     public class DeleteUser : IDeleteUser
@@ -16,9 +17,9 @@ namespace MultiTodoList.Core.TodoModule.UseCase.Services
             _repository = repository;
         }
 
-        public void Execute(Guid id)
+        public async Task Execute(Guid id)
         {
-            _repository.Remove(id);
+          await  _repository.Remove(id);
         }
     }
 }
