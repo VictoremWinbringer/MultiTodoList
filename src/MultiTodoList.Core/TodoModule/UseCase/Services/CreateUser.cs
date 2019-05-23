@@ -21,7 +21,7 @@ namespace MultiTodoList.Core.TodoModule.UseCase.Services
 
         public async Task<Guid> Execute(User user)
         {
-            var newUser = new User(user.Photo, user.Age, user.Name, new byte[0]);
+            var newUser = new User(user.Photo, user.Age, user.Name);
             await _repository.Create(newUser);
             return newUser.Id;
         }
