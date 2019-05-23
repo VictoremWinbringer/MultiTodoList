@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTodoList.Infrastructure;
@@ -18,32 +19,20 @@ namespace MultiTodoList.Presentation
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _options    =
-            new Lazy<DbContextOptions<MultiTodoListDbContext>>(
-                () =>
-                {
-                    var connection = Configuration.GetConnectionString("main");
-                    var optionsBuilder = new DbContextOptionsBuilder<MultiTodoListDbContext>();
-                    var options = optionsBuilder
-                        .UseSqlite(connection)
-                        .EnableDetailedErrors()
-                        .Options;
-                    return options;
-                },true);
         }
 
         public IConfiguration Configuration { get; }
 
-        private Lazy<DbContextOptions<MultiTodoListDbContext>> _options;
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("main");
+            services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddScoped<MultiTodoListDbContext>(sf=>new MultiTodoListDbContext(_options.Value));
+            services.AddDbContext<MultiTodoListDbContext>(options => options
+                .UseSqlite(connection)
+                .EnableDetailedErrors());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseMiddleware<ExceptionMiddleware>();

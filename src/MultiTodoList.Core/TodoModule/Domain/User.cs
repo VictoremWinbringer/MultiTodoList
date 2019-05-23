@@ -15,18 +15,21 @@ namespace MultiTodoList.Core.TodoModule.Domain
         public Age Age { get; private set; }
         public Name Name { get; private set; }
         
+        public byte[] RowVersion { get; private set; }
+        
         public IReadOnlyCollection<TodoGroup> Groups => _groups.AsReadOnly();
 
-        public User(Guid id, Photo photo, Age age, Name name, List<TodoGroup> groups)
+        public User(Guid id, Photo photo, Age age, Name name, List<TodoGroup> groups, byte[] rowVersion)
         {
             Id = id;
             Photo = photo;
             Age = age;
             Name = name;
             _groups = groups;
+            RowVersion = rowVersion;
         }
 
-        public User(Photo photo,Age age, Name name) : this(Guid.NewGuid(), photo, age, name, new List<TodoGroup>()){}
+        public User(Photo photo,Age age, Name name) : this(Guid.NewGuid(), photo, age, name, new List<TodoGroup>(), new byte[0]){}
 
         private void CheckName(TodoGroup group)
         {
@@ -37,17 +40,17 @@ namespace MultiTodoList.Core.TodoModule.Domain
         public void Add(TodoGroup group)
         {
             CheckName(group);
-
             _groups.Add(group);
         }
 
         public void RemoveGroup(Name groupName) => _groups.RemoveAll(g => g.Name == groupName);
 
-        public void UpdateInfo(Photo photo, Name name, Age age)
+        public void UpdateInfo(User user)
         {
-            Photo = photo;
-            Name = name;
-            Age = age;
+            Photo = user.Photo;
+            Name = user.Name;
+            Age = user.Age;
+            RowVersion = user.RowVersion;
         }
     }
 }

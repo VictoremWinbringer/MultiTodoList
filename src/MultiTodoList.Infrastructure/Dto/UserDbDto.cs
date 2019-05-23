@@ -21,7 +21,7 @@ namespace MultiTodoList.Infrastructure.Dto
 
         public User To()
         {
-            return new User(Id, new Photo(Photo), new Age(Age), new Name(Name), Groups.Select(g => g.To()).ToList());
+            return new User(Id, new Photo(Photo), new Age(Age), new Name(Name), Groups.Select(g => g.To()).ToList(), RowVersion);
         }
 
         public static UserDbDto From(User user)
@@ -32,7 +32,8 @@ namespace MultiTodoList.Infrastructure.Dto
                 Age = user.Age.Value,
                 Name = user.Name.Value,
                 Photo = user.Photo.Value,
-                Groups = user.Groups.Select(TodoGroupDbDto.From).ToList()
+                Groups = user.Groups.Select(TodoGroupDbDto.From).ToList(),
+                RowVersion = user.RowVersion
             };
         }
     }

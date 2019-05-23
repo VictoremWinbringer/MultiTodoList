@@ -34,8 +34,4 @@ namespace MultiTodoList.Core.TodoModule.Domain
             Complited = DateTime.UtcNow;
         }
     }
-
-    public class TodoAlreadyCompletedException : Exception
-    {
-    }
 }
