@@ -14,8 +14,8 @@ namespace MultiTodoList.Application.Infrastructure.Dto
         public byte Red { get; set; }
         public byte Green { get; set; }
         public byte Blue { get; set; }
-        public UserDbDto User { get; set; }
-        public List<TodoDbDto> Todos { get; set; }
+        [Required] public UserDbDto User { get; set; }
+        public List<TodoDbDto> Todos { get; set; } = new List<TodoDbDto>();
 
         public TodoGroup To()
         {
