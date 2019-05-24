@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
-using MultiTodoList.Core.TodoModule.Domain;
-using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
+using MultiTodoList.Application.Presentation.Models;
 using MultiTodoList.Core.TodoModule.UseCase.Services;
-using MultiTodoList.Presentation.Models;
 
-namespace MultiTodoList.Presentation.Controllers
+namespace MultiTodoList.Application.Presentation.Controllers
 {
     [Route("api/v1/users/")]
     [ApiController]

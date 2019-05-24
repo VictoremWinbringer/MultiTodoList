@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using MultiTodoList.Core.TodoModule.Domain;
-using MultiTodoList.Infrastructure.Dto;
+using MultiTodoList.Application.Infrastructure.Dto;
 
-namespace MultiTodoList.Infrastructure
+namespace MultiTodoList.Application.Infrastructure
 {
     public class MultiTodoListDbContext : DbContext
     {
         public MultiTodoListDbContext(DbContextOptions<MultiTodoListDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,10 +16,12 @@ namespace MultiTodoList.Infrastructure
                 .HasOne(t => t.Group)
                 .WithMany(g => g.Todos)
                 .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<TodoGroupDbDto>()
                 .HasOne(g => g.User)
                 .WithMany(u => u.Groups)
                 .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
 

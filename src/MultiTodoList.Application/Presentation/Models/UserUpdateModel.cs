@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
-namespace MultiTodoList.Presentation.Models
+namespace MultiTodoList.Application.Presentation.Models
 {
     public class UserUpdateModel
     {

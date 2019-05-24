@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +5,7 @@ using System.Linq;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 
-namespace MultiTodoList.Infrastructure.Dto
+namespace MultiTodoList.Application.Infrastructure.Dto
 {
     [Table("TodoGroups")]
     public class TodoGroupDbDto

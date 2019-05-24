@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MultiTodoList.Application.Infrastructure.Dto;
 using MultiTodoList.Core.TodoModule.Domain;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 using MultiTodoList.Core.TodoModule.UseCase;
-using MultiTodoList.Infrastructure.Dto;
-using Remotion.Linq.Clauses;
 
-namespace MultiTodoList.Infrastructure
+namespace MultiTodoList.Application.Infrastructure
 {
     public class UserEfRepository : IUserRepository
     {

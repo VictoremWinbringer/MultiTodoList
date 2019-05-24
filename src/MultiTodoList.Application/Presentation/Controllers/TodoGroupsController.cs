@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MultiTodoList.Application.Presentation.Models;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 using MultiTodoList.Core.TodoModule.UseCase.Services;
-using MultiTodoList.Presentation.Models;
 
-namespace MultiTodoList.Presentation.Controllers
+namespace MultiTodoList.Application.Presentation.Controllers
 {
     [Route("api/v1/users/{userId}/groups/")]
     [ApiController]

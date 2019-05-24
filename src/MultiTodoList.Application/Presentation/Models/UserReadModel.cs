@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MultiTodoList.Core.TodoModule.Domain;
-using MultiTodoList.Infrastructure.Dto;
 
-namespace MultiTodoList.Presentation.Models
+namespace MultiTodoList.Application.Presentation.Models
 {
     public class UserReadModel
     {

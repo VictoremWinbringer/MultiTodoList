@@ -1,6 +1,6 @@
-namespace MultiTodoList.Presentation.Models
+namespace MultiTodoList.Application.Presentation.Models
 {
-    public class GroupUpdateModel
+    public class GroupCreateModel
     {
         public string Name { get; set; }
         public byte Red { get; set; }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 using MultiTodoList.Core.TodoModule.UseCase.Services;
 
-namespace MultiTodoList.Presentation.Controllers
+namespace MultiTodoList.Application.Presentation.Controllers
 {
     [Route("api/v1/users/{userId}/groups/{groupName}/todos/")]
     [ApiController]

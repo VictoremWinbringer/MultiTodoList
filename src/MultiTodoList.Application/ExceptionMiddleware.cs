@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace MultiTodoList.Presentation
+namespace MultiTodoList.Application
 {
     public class ExceptionMiddleware
     {
