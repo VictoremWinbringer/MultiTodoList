@@ -21,7 +21,7 @@ namespace MultiTodoList.Infrastructure.Dto
             return new Todo(new Name(Name), IsComplited, Created, Complited);
         }
 
-        public static TodoDbDto From(Todo todo)
+        public static TodoDbDto From(Todo todo, TodoGroup group, User user)
         {
             return new TodoDbDto
             {
@@ -29,6 +29,7 @@ namespace MultiTodoList.Infrastructure.Dto
                 IsComplited = todo.IsComplited,
                 Created = todo.Created,
                 Complited = todo.Complited,
+                Group = TodoGroupDbDto.From(group, user)
             };
         }
     }

@@ -32,7 +32,7 @@ namespace MultiTodoList.Infrastructure.Dto
                 Age = user.Age.Value,
                 Name = user.Name.Value,
                 Photo = user.Photo.Value,
-                Groups = user.Groups.Select(TodoGroupDbDto.From).ToList(),
+                Groups = user.Groups.Select(g=> TodoGroupDbDto.From(g,user)).ToList(),
                 RowVersion = user.RowVersion
             };
         }

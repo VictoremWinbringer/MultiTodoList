@@ -23,7 +23,7 @@ namespace MultiTodoList.Infrastructure.Dto
             return new TodoGroup(new Name(Name), new Color(Red, Green, Blue), Todos.Select(t => t.To()).ToList());
         }
 
-        public static TodoGroupDbDto From(TodoGroup group)
+        public static TodoGroupDbDto From(TodoGroup group, User user)
         {
             return new TodoGroupDbDto
             {
@@ -31,7 +31,8 @@ namespace MultiTodoList.Infrastructure.Dto
                 Blue = group.Color.Blue,
                 Green = group.Color.Green,
                 Red = group.Color.Red,
-                Todos = group.Todos.Select(TodoDbDto.From).ToList()
+                Todos = group.Todos.Select(t => TodoDbDto.From(t, group, user)).ToList(),
+                User = UserDbDto.From(user)
             };
         }
     }
