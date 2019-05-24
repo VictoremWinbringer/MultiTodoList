@@ -10,10 +10,6 @@ using MultiTodoList.Infrastructure;
 
 namespace MultiTodoList.Presentation
 {
-    class EfOptions : DbContextOptions<MultiTodoListDbContext>
-    {
-    }
-
     public class Startup
     {
         public Startup(IConfiguration configuration)

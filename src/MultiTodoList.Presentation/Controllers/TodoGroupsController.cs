@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MultiTodoList.Core.TodoModule.Domain.ValueObjects;
 using MultiTodoList.Core.TodoModule.UseCase.Services;
+using MultiTodoList.Presentation.Models;
 
 namespace MultiTodoList.Presentation.Controllers
 {
@@ -35,31 +36,10 @@ namespace MultiTodoList.Presentation.Controllers
                 new Color(group.Red, group.Green, group.Blue));
         }
 
-        [HttpDelete]
-        public async Task Delete(Guid userId, [FromBody] GroupDeleteModel group)
+        [HttpDelete("{name}")]
+        public async Task Delete(Guid userId, string name)
         {
-            await _removeGroup.Execute(userId, new Name(group.Name));
+            await _removeGroup.Execute(userId, new Name(name));
         }
-    }
-
-    public class GroupDeleteModel
-    {
-        public string Name { get; set; }
-    }
-
-    public class GroupUpdateModel
-    {
-        public string Name { get; set; }
-        public byte Red { get; set; }
-        public byte Green { get; set; }
-        public byte Blue { get; set; }
-    }
-
-    public class GroupCreateModel
-    {
-        public string Name { get; set; }
-        public byte Red { get; set; }
-        public byte Green { get; set; }
-        public byte Blue { get; set; }
     }
 }
