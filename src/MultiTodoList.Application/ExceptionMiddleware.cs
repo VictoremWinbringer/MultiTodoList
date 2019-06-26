@@ -10,9 +10,9 @@ namespace MultiTodoList.Application
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILoggerProvider _logger;
+        private readonly ILogger _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILoggerProvider logger)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _logger = logger;
             _next = next;
@@ -26,7 +26,7 @@ namespace MultiTodoList.Application
             }
             catch (Exception ex)
             {
-                _logger.CreateLogger("ERROR").LogError($"Something went wrong: {ex}");
+                _logger.LogError($"Something went wrong: {ex}");
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
